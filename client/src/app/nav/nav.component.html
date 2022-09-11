@@ -1,73 +1,56 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Dating App</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarCollapse"
-      aria-controls="navbarCollapse"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <a class="navbar-brand" routerLink="/">Dating App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser$|async">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Matches</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Lists</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">Massages</a>
-        </li>
+      <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser$ | async">
+        <ng-container>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="/members" routerLinkActive="active">Matches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
+          </li>
+        </ng-container>
       </ul>
 
-      <div class="btn-group" *ngIf="accountService.currentUser$|async" dropdown>
-        <button type="button" class="btn btn-primary">Welcome user</button>
-        <button id="button-split" type="button" dropdownToggle class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                aria-controls="dropdown-split">
+      <div class="btn-group" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <button type="button" class="btn btn-info">Welcome {{user.username|titlecase}} !</button>
+        <button id="button-split" type="button" dropdownToggle
+          class="btn btn-info dropdown-toggle dropdown-toggle-split" aria-controls="dropdown-split">
           <span class="caret"></span>
           <span class="sr-only visually-hidden">Split button!</span>
         </button>
-        <ul id="dropdown-split" *dropdownMenu class="dropdown-menu"
-            role="menu" aria-labelledby="button-split">
-          <li role="menuitem"><a class="dropdown-item" href="#">Edit Profile</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+        <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-split">
+          <li role="menuitem">
+            <a class="dropdown-item" href="#">Edit Profile</a>
           </li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Something else
-            here</a></li>
+          <li role="menuitem">
+            <a class="dropdown-item" href="#">Another action</a>
+          </li>
+          <li role="menuitem">
+            <a class="dropdown-item" href="#">Something else here</a>
+          </li>
           <li class="divider dropdown-divider"></li>
-          <li role="menuitem"><a class="dropdown-item" (click)="logout()">Logout</a>
+          <li role="menuitem">
+            <a class="dropdown-item" (click)="logout()">Logout</a>
           </li>
         </ul>
       </div>
 
-      <form
-        #loginForm="ngForm"
-        class="form-inline mt-2 mt-md-0"
-        role="search"
-        (ngSubmit)="login()"
-        autocomplete="on"
-        *ngIf="(accountService.currentUser$| async)===null"
-      >
-        <input
-          name="username"
-          [(ngModel)]="model.username"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Username"
-        />
-        <input
-          name="password"
-          [(ngModel)]="model.password"
-          class="form-control mr-sm-2"
-          type="password"
-          placeholder="Password"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+      <form #loginForm="ngForm" class="form-inline mt-2 mt-md-0" role="search" (ngSubmit)="login()" autocomplete="on"
+        *ngIf="(accountService.currentUser$ | async) === null">
+        <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2" type="search"
+          placeholder="Username" />
+        <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2" type="password"
+          placeholder="Password" />
+        <button class="btn btn-success my-2 my-sm-0" type="submit">
           Login
         </button>
       </form>
