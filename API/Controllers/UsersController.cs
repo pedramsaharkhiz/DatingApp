@@ -33,7 +33,8 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        [HttpGet("username")]
+        // [HttpGet("username")] //query argument
+        [HttpGet("{username}")]  //url path
         public async Task<ActionResult<MemberDto>> GetUsers(string username)
         {
             return await this._userRepository.GetMemberAsync(username);
