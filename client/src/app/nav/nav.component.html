@@ -25,7 +25,7 @@
 
       <div class="btn-group" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <img src="{{user.photoUrl||'./assets/user.png'}}" alt="{{user.username}}">
-        <button type="button" class="btn btn-info">Welcome {{user.username|titlecase}} !</button>
+        <button type="button" class="btn btn-info">Welcome {{user.knownAs|titlecase}} !</button>
         <button id="button-split" type="button" dropdownToggle
           class="btn btn-info dropdown-toggle dropdown-toggle-split" aria-controls="dropdown-split">
           <span class="caret"></span>
