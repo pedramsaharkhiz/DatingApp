@@ -33,11 +33,17 @@ export class AccountService {
     )
   }
   setCurrentUser(user:User){
+    user.roles=[];
+    const roles=this.getDecodedToken(user.token).role;//role is part of token that decoded in JWT.io that defines the role of user
+    Array.isArray(roles)?user.roles=roles:user.roles.push(roles);//check if roles is an array (multi roles(admin & moderator etc))or not
     localStorage.setItem('user',JSON.stringify(user));
     this.currentUserSource.next(user);
   }
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null!);
+  }
+  getDecodedToken(token){
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }
