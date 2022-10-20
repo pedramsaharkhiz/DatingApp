@@ -5,16 +5,16 @@ import { getPaginatedResult, getPaginationHeaders } from './paginatiionHelper';
 import { Message } from '../_models/message';
 import { User } from 'src/app/_models/user';
 import { BehaviorSubject } from 'rxjs';
-import { MessagesComponent } from '../messages/messages.component';
 import { take } from 'rxjs/operators';
 import { Group } from '../_models/group';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  baseUrl="https://localhost:5001/api/";
-  hubUrl="https://localhost:5001/hubs/";
+  baseUrl=environment.apiUrl;
+  hubUrl=environment.hubUrl;
   private hubConnection:HubConnection; 
   private messageThreadSource=new BehaviorSubject<Message[]>([]);
   messageThread$=this.messageThreadSource.asObservable();

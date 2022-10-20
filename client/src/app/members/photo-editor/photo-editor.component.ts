@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { Member } from '../../_models/member';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { AccountService } from '../../_services/account.service';
 import { User } from 'src/app/_models/user';
 import { take } from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class PhotoEditorComponent implements OnInit {
   @Input() member: Member;
   uploader: FileUploader;
   hasBaseDropZoneOver: boolean;
-  baseurl = 'https://localhost:5001/api/';
+  baseurl = environment.apiUrl;
   user: User;
 
   constructor(private accountService: AccountService,private memberService:MembersService) {
