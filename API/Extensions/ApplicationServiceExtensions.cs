@@ -57,8 +57,7 @@ namespace API.Extensions
                     var pgHost = pgHostPort.Split(":")[0];
                     var pgPort = pgHostPort.Split(":")[1];
 
-                    connStr ="Server=localhost; Port=5432; User Id=appuser; Password=Pa1174w0rd; Database=datingapp;SSL Mode=Require;TrustServerCertificate=True";
-                    // "Server=localhost; Port=5432; User Id=appuser; Password=Pa1174w0rd; Database=datingapp"
+                    connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SSL Mode=Require; Trust Server Certificate=true"; 
                 }
 
                 // Whether the connection string came from the local development configuration file
