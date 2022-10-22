@@ -1,39 +1,39 @@
 <div class="card">
     <div class="card-body"
         #scrollMe
-        style="overflow: scroll; height: 535px;"
+        style="overflow: scroll; height: 610px;"
         [scrollTop]="scrollMe.scrollHeight"
     >
         <div *ngIf="(messageService.messageThread$|async)?.length === 0">
             No messages yet... say hi by using the message box below
         </div>
 
-        <ul #scrollMe
-            style="overflow: scroll;height: 500px;"
-            [scrollTop]="scrollMe.scrollHeight"
+        <ul 
             *ngIf="(messageService.messageThread$|async)?.length > 0" 
             class="chat">
             <li *ngFor="let message of (messageService.messageThread$|async)">
                 <div>
                     <span class="chat-img float-end">
-                        <img class="rounded-circle" src="{{message.senderPhotoUrl || './assets/user.png'}}" 
-                            alt="{{message.senderUsername}}">
+                        <img *ngIf="message.senderUsername==username" class="rounded-circle" src="{{message.senderPhotoUrl || './assets/user.png'}}" 
+                            alt="{{message.senderUsername}}"
+                            style="height:40px ;width:40px;padding: 3px;">
                     </span>
-                    <div class="chat-body">
+                    <div class="chat-body"[ngStyle]="{'background-color':message.senderUsername==username? '#F1EFE8' : '#EAF0F1'}"style="border-radius: 10px;">
                         <div class="header">
-                            <small class="text-muted">
-                                <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
-                                <span class="text-danger" *ngIf="!message.dateRead 
-                                    && message.senderUsername !== username">
-                                    (unread)
+                            <small class="text-muted"style="margin:5px">
+                                <span class="fa fa-clock-o">  {{message.messageSent|date:'HH:mm'}}</span>
+                                <span class="text-black" *ngIf="!message.dateRead 
+                                    && message.senderUsername !== username" style="margin-left:5px ;">
+                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
                                 </span>
                                 <span class="text-success" *ngIf="message.dateRead 
-                                    && message.senderUsername !== username">
-                                    (read {{message.dateRead | timeago}})
+                                && message.senderUsername !== username"style="margin-left:5px ;">
+                                <!-- (read {{message.dateRead | timeago}}) -->
+                                <i class="fa fa-eye" aria-hidden="true"></i>
                                 </span>
                             </small>
                         </div>
-                        <p>{{message.content}}</p>
+                        <p style="padding:5px">{{message.content}}</p>
                     </div>
                 </div>
             </li>
@@ -51,8 +51,8 @@
                     class="form-control input-sm" 
                     placeholder="Send a private message">
                 <div class="input-group-append">
-                    <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit">Send
-                        <!-- <i *ngIf="loading" class="fa fa-spinner fa-spin"></i> -->
+                    <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit"[scrollTop]="scrollMe.scrollHeight">Send
+                        <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
                     </button>
                 </div>
             </div>
